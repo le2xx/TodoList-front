@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Todo} from './common/interfaces/todo';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'TodoList-front';
+  apiHost = 'assets/json/demo.json';
+  todoList: Todo[];
+  displayedColumns: string[] = ['id', 'text', 'date', 'buttons'];
+  preloaderFlag: boolean = false;
+
+  constructor(private http: HttpClient) {
+    this.http.get(this.apiHost).subscribe(
+      (data) => {
+        this.todoList = data['todo'];
+        setTimeout(() => this.preloaderFlag = true, 2000);
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err.message);
+      });
+  }
 }
