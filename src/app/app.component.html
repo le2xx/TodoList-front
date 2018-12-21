@@ -1,44 +1,54 @@
 <div class="app">
-  <div class="app__header">
-    <h1 class="app__title">Список дел</h1>
-  </div>
 
   <div *ngIf="!preloaderFlag" class="app__preloader">
     <div class="app__preloader-text">задачи загружаются</div>
-      <div class="app__spinner">
-        <mat-spinner
-          [diameter]=50>
-        </mat-spinner>
+    <mat-spinner class="app__spinner" [diameter]=50></mat-spinner>
+  </div>
+
+  <mat-drawer-container class="app__drawer">
+    <mat-drawer #sidenav mode="side" closed>
+      <mat-toolbar color="primary">Заполните поля</mat-toolbar>
+      <form class="app__form">
+        <mat-form-field class="app__form-text">
+          <textarea class="app__form-input" rows="4" matInput placeholder="Введите текст" (keyup)="onKey($event)"></textarea>
+        </mat-form-field>
+      </form>
+      <button class="app__form-btn" mat-raised-button color="primary" [disabled]="inputForm === ''">добавить задачу</button>
+    </mat-drawer>
+
+    <mat-drawer-content>
+      <button class="app__new-todo" mat-raised-button color="primary" (click)="sidenav.toggle()">новая задача</button>
+      <div *ngIf="preloaderFlag" class="app__table-todo">
+        <table mat-table [dataSource]="todoList" class="app__table">
+
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> No.</th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="text">
+            <th mat-header-cell *matHeaderCellDef> Описание</th>
+            <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Дата создания</th>
+            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="buttons">
+            <th mat-header-cell *matHeaderCellDef> Действия</th>
+            <td mat-cell *matCellDef="let element"> Удалить/Редактировать</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
       </div>
-  </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
 
-  <div *ngIf="preloaderFlag" class="app__table-todo">
-    <table mat-table [dataSource]="todoList" class="mat-elevation-z8">
 
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> No.</th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="text">
-        <th mat-header-cell *matHeaderCellDef> Описание</th>
-        <td mat-cell *matCellDef="let element"> {{element.text}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef> Дата создания</th>
-        <td mat-cell *matCellDef="let element"> {{element.date}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="buttons">
-        <th mat-header-cell *matHeaderCellDef> Действия</th>
-        <td mat-cell *matCellDef="let element"> Удалить/Редактировать</td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-    </table>
-  </div>
 
 </div>

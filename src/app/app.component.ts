@@ -11,7 +11,9 @@ export class AppComponent {
   apiHost = 'assets/json/demo.json';
   todoList: Todo[];
   displayedColumns: string[] = ['id', 'text', 'date', 'buttons'];
-  preloaderFlag: boolean = false;
+  preloaderFlag = false;
+  inputForm = '';
+
 
   constructor(private http: HttpClient) {
     this.http.get(this.apiHost).subscribe(
@@ -22,5 +24,9 @@ export class AppComponent {
       (err: HttpErrorResponse) => {
         console.log(err.message);
       });
+  }
+
+  onKey(event: any) {
+    this.inputForm = event.target.value;
   }
 }
