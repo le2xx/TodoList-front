@@ -2,7 +2,7 @@
   display: block;
 
   &__preloader {
-    display: inline-block;
+    display: block;
     position: absolute;
     margin: auto;
     top: 50%;
@@ -34,7 +34,8 @@
   }
 
   &__drawer {
-    min-height: 400px;
+    //min-height: 400px;
+    // height: -webkit-fill-available;
   }
 
   &__form {

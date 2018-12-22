@@ -1,11 +1,6 @@
 <div class="app">
 
-  <div *ngIf="!preloaderFlag" class="app__preloader">
-    <div class="app__preloader-text">задачи загружаются</div>
-    <mat-spinner class="app__spinner" [diameter]=50></mat-spinner>
-  </div>
-
-  <mat-drawer-container class="app__drawer">
+  <mat-drawer-container class="app__drawer" fullscreen>
     <mat-drawer #sidenav mode="side" closed>
       <mat-toolbar color="primary">Заполните поля</mat-toolbar>
       <form class="app__form">
@@ -18,6 +13,12 @@
 
     <mat-drawer-content>
       <button class="app__new-todo" mat-raised-button color="primary" (click)="sidenav.toggle()">новая задача</button>
+
+      <div *ngIf="!preloaderFlag" class="app__preloader">
+        <div class="app__preloader-text">задачи загружаются</div>
+        <mat-spinner class="app__spinner" [diameter]=50></mat-spinner>
+      </div>
+
       <div *ngIf="preloaderFlag" class="app__table-todo">
         <table mat-table [dataSource]="todoList" class="app__table">
 
@@ -38,7 +39,11 @@
 
           <ng-container matColumnDef="buttons">
             <th mat-header-cell *matHeaderCellDef> Действия</th>
-            <td mat-cell *matCellDef="let element"> Удалить/Редактировать</td>
+            <td mat-cell *matCellDef="let element">
+              <button mat-mini-fab color="primary" (click)="openDialog(element.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -48,7 +53,5 @@
       </div>
     </mat-drawer-content>
   </mat-drawer-container>
-
-
 
 </div>

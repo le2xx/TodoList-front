@@ -2,21 +2,31 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatIconModule} from '@angular/material/icon';
 import {
   MatTableModule,
   MatProgressSpinnerModule,
   MatButtonModule,
   MatSidenavModule,
   MatToolbarModule,
-  MatInputModule
+  MatInputModule,
+  MatDialogModule,
+  MatProgressBarModule
 } from '@angular/material';
 
 
 import {AppComponent} from './app.component';
+import {AppConfirmDialogComponent} from './app-confirm-dialog/app-confirm-dialog.component';
+import {TodoListService} from './common/services/todo-list.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AppConfirmDialogComponent
+  ],
+  entryComponents: [
+    AppComponent,
+    AppConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -27,9 +37,12 @@ import {AppComponent} from './app.component';
     MatSidenavModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule,
+    MatDialogModule,
+    MatProgressBarModule
   ],
-  providers: [],
+  providers: [TodoListService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

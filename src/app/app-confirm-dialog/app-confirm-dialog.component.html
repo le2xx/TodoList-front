@@ -1,0 +1,8 @@
+<div *ngIf="progress === 0">
+  <p class="confirm__text">Вы точно хотите удалить эту задачу?</p>
+  <div class="confirm__btn-block">
+    <button class="confirm__btn" mat-raised-button color="primary" (click)="onYesClick()">да</button>
+    <button class="confirm__btn" mat-raised-button color="primary" (click)="onNoClick()">нет</button>
+  </div>
+</div>
+<mat-progress-bar class="confirm__progress" mode="determinate" [value]="progress" *ngIf="progress > 1"></mat-progress-bar>
