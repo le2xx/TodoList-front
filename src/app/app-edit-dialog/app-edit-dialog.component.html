@@ -1,0 +1,11 @@
+<mat-form-field class="edit__form-text" *ngIf="progress === 0">
+  <textarea class="edit__form-input" rows="4" matInput placeholder="Исправьте текст"
+            [value]="text" (keyup)="onKey($event)"></textarea>
+</mat-form-field>
+
+<div class="edit__btn-block" *ngIf="progress === 0">
+  <button class="edit__btn" mat-raised-button color="primary" (click)="onYesClick()">сохранить</button>
+  <button class="edit__btn" mat-raised-button color="primary" (click)="onNoClick()">отмена</button>
+</div>
+
+<mat-progress-bar class="edit__progress" mode="determinate" [value]="progress" *ngIf="progress > 1"></mat-progress-bar>

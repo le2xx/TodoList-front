@@ -18,15 +18,18 @@ import {
 import {AppComponent} from './app.component';
 import {AppConfirmDialogComponent} from './app-confirm-dialog/app-confirm-dialog.component';
 import {TodoListService} from './common/services/todo-list.service';
+import { AppEditDialogComponent } from './app-edit-dialog/app-edit-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppConfirmDialogComponent
+    AppConfirmDialogComponent,
+    AppEditDialogComponent
   ],
   entryComponents: [
     AppComponent,
-    AppConfirmDialogComponent
+    AppConfirmDialogComponent,
+    AppEditDialogComponent
   ],
   imports: [
     BrowserModule,

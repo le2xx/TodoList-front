@@ -3,6 +3,7 @@ import {Todo} from './common/interfaces/todo';
 import {TodoListService} from './common/services/todo-list.service';
 import {MatDialog} from '@angular/material';
 import {AppConfirmDialogComponent} from './app-confirm-dialog/app-confirm-dialog.component';
+import {AppEditDialogComponent} from './app-edit-dialog/app-edit-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,10 @@ export class AppComponent implements OnInit {
   preloaderFlag = false;
   inputForm = '';
 
-  constructor(public confirmDialog: MatDialog, public todoListService: TodoListService) {
+  constructor(
+    public confirmDialog: MatDialog,
+    public editDialog: MatDialog,
+    public todoListService: TodoListService) {
   }
 
   ngOnInit() {
@@ -29,7 +33,7 @@ export class AppComponent implements OnInit {
     this.inputForm = event.target.value;
   }
 
-  openDialog(id: number) {
+  openConfirmDialog(id: number) {
     const confirmDialog = this.confirmDialog.open(AppConfirmDialogComponent, {
       width: '300px',
       height: '170px',
@@ -37,6 +41,20 @@ export class AppComponent implements OnInit {
     confirmDialog.afterClosed().subscribe(result => {
       if (result) {
         this.todoList = this.todoList.filter(item => item.id !== id);
+      }
+    });
+  }
+
+  openEditDialog(id: number) {
+    const [todo] = this.todoList.filter(item => item.id === id);
+    const editDialog = this.editDialog.open(AppEditDialogComponent, {
+      width: '250px',
+      height: '250px',
+      data: todo
+    });
+    editDialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.todoList.map(item => item.id === id ? item.text = result : null);
       }
     });
   }
