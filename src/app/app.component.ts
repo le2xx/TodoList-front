@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Todo} from './common/interfaces/todo';
 import {TodoListService} from './common/services/todo-list.service';
 import {MatDialog} from '@angular/material';
 import {AppConfirmDialogComponent} from './app-confirm-dialog/app-confirm-dialog.component';
 import {AppEditDialogComponent} from './app-edit-dialog/app-edit-dialog.component';
+import {MatSidenav} from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,12 @@ import {AppEditDialogComponent} from './app-edit-dialog/app-edit-dialog.componen
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  @ViewChild('sidenav') public sideNav: MatSidenav;
+
   todoList: Todo[];
   displayedColumns: string[] = ['id', 'text', 'date', 'buttons'];
   preloaderFlag = false;
+  addFlag = false;
   inputForm = '';
 
   constructor(
@@ -31,6 +35,23 @@ export class AppComponent implements OnInit {
 
   onKey(event: any) {
     this.inputForm = event.target.value;
+  }
+
+  onAddTodo() {
+    const date = new Date;
+    const item = {
+      id: 6,
+      text: this.inputForm,
+      date: date.getDate() + '/' + Number(date.getMonth() + 1) + '/' + date.getFullYear()
+    };
+    const newData = this.todoList.slice();
+    setTimeout(() => {
+      this.addFlag = !this.addFlag;
+      newData.push(item);
+      this.todoList = newData;
+      this.sideNav.close();
+    }, 2000);
+    this.addFlag = !this.addFlag;
   }
 
   openConfirmDialog(id: number) {

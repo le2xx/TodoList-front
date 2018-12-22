@@ -3,12 +3,22 @@
   <mat-drawer-container class="app__drawer" fullscreen>
     <mat-drawer #sidenav mode="side" closed>
       <mat-toolbar color="primary">Заполните поля</mat-toolbar>
-      <form class="app__form">
+      <form class="app__form" *ngIf="!addFlag">
         <mat-form-field class="app__form-text">
-          <textarea class="app__form-input" rows="4" matInput placeholder="Введите текст" (keyup)="onKey($event)"></textarea>
+          <textarea class="app__form-input" rows="4" matInput placeholder="Введите текст"
+                    (keyup)="onKey($event)"></textarea>
         </mat-form-field>
       </form>
-      <button class="app__form-btn" mat-raised-button color="primary" [disabled]="inputForm === ''">добавить задачу</button>
+      <button class="app__form-btn" mat-raised-button color="primary" [disabled]="inputForm === ''"
+              (click)="onAddTodo()" *ngIf="!addFlag">
+        добавить задачу
+      </button>
+
+      <div class="app__add-loader" *ngIf="addFlag">
+        <div class="app__preloader-text">подождите, идёт добавление</div>
+        <mat-spinner class="app__spinner" [diameter]=30></mat-spinner>
+      </div>
+
     </mat-drawer>
 
     <mat-drawer-content>

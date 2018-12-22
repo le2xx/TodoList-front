@@ -25,6 +25,7 @@
   &__spinner {
     display: inline-block;
     vertical-align: middle;
+    margin: auto;
   }
 
   &__new-todo {
@@ -60,6 +61,14 @@
 
   &__edit-btn {
     display: none;
+  }
+
+  &__add-loader {
+    display: block;
+    position: absolute;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 
