@@ -1,8 +1,8 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatIconModule} from '@angular/material/icon';
 import {
   MatTableModule,
   MatProgressSpinnerModule,
@@ -10,6 +10,7 @@ import {
   MatSidenavModule,
   MatToolbarModule,
   MatInputModule,
+  MatIconModule,
   MatDialogModule,
   MatProgressBarModule
 } from '@angular/material';
@@ -43,7 +44,8 @@ import { AppEditDialogComponent } from './app-edit-dialog/app-edit-dialog.compon
     MatInputModule,
     MatIconModule,
     MatDialogModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    ReactiveFormsModule
   ],
   providers: [TodoListService],
   bootstrap: [AppComponent]

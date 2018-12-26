@@ -5,6 +5,7 @@ import {MatDialog} from '@angular/material';
 import {AppConfirmDialogComponent} from './app-confirm-dialog/app-confirm-dialog.component';
 import {AppEditDialogComponent} from './app-edit-dialog/app-edit-dialog.component';
 import {MatSidenav} from '@angular/material';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,14 @@ export class AppComponent implements OnInit {
   preloaderFlag = false;
   addFlag = false;
   inputForm = '';
+
+  todoForm: FormGroup = new FormGroup({
+    text: new FormControl('',[
+      Validators.required,
+      Validators.pattern('[^!]*')
+    ]),
+    date: new FormControl(this.dateToday())
+  });
 
   constructor(
     public confirmDialog: MatDialog,
@@ -35,6 +44,11 @@ export class AppComponent implements OnInit {
 
   onKey(event: any) {
     this.inputForm = event.target.value;
+  }
+
+  dateToday() {
+    const date = new Date;
+    return date.getDate() + '-' + Number(date.getMonth() + 1) + '-' + date.getFullYear();
   }
 
   onAddTodo() {
@@ -54,14 +68,15 @@ export class AppComponent implements OnInit {
     this.addFlag = !this.addFlag;
   }
 
-  openConfirmDialog(id: number) {
+  openConfirmDialog(id: string) {
     const confirmDialog = this.confirmDialog.open(AppConfirmDialogComponent, {
       width: '300px',
       height: '170px',
     });
     confirmDialog.afterClosed().subscribe(result => {
       if (result) {
-        this.todoList = this.todoList.filter(item => item.id !== id);
+        this.todoListService.deleteData(id);
+        this.todoList = this.todoList.filter(item => item.id !== Number(id));
       }
     });
   }
@@ -78,5 +93,18 @@ export class AppComponent implements OnInit {
         this.todoList.map(item => item.id === id ? item.text = result : null);
       }
     });
+  }
+
+  submit() {
+    const controls = this.todoForm.controls;
+
+    if (this.todoForm.invalid) {
+      Object.keys(controls)
+        .forEach(controlName => controls[controlName].markAsTouched());
+      return;
+    }
+
+    this.todoListService.setData(this.todoForm.value);
+    console.log(this.todoForm.value);
   }
 }

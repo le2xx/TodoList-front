@@ -21,7 +21,6 @@ export class AppConfirmDialogComponent {
   onYesClick() {
     const progressUp = () => {
       if (this.progress >= 100) {
-        // ToDo function delete items
         this.dialogRef.close(true);
       }
       setTimeout(() => {

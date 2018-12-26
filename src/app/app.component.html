@@ -3,16 +3,16 @@
   <mat-drawer-container class="app__drawer" fullscreen>
     <mat-drawer #sidenav mode="side" closed>
       <mat-toolbar color="primary">Заполните поля</mat-toolbar>
-      <form class="app__form" *ngIf="!addFlag">
+      <form class="app__form" *ngIf="!addFlag" [formGroup]="todoForm" (submit)="submit()">
         <mat-form-field class="app__form-text">
           <textarea class="app__form-input" rows="4" matInput placeholder="Введите текст"
-                    (keyup)="onKey($event)"></textarea>
+                    (keyup)="onKey($event)" name="text" formControlName="text"></textarea>
         </mat-form-field>
+        <button type="submit" class="app__form-btn" mat-raised-button color="primary" [disabled]="inputForm === ''">
+          добавить задачу
+        </button>
       </form>
-      <button class="app__form-btn" mat-raised-button color="primary" [disabled]="inputForm === ''"
-              (click)="onAddTodo()" *ngIf="!addFlag">
-        добавить задачу
-      </button>
+
 
       <div class="app__add-loader" *ngIf="addFlag">
         <div class="app__preloader-text">подождите, идёт добавление</div>
