@@ -37,6 +37,16 @@ export class TodoListService {
     });
   }
 
+  updateData(id: string) {
+    this.http.put(this.apiHost, id).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err.message);
+      });
+  }
+
   deleteData(id: string) {
     this.http.delete(this.apiHost + '?id=' + id).subscribe(
       (data) => {

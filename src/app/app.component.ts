@@ -6,6 +6,7 @@ import {AppConfirmDialogComponent} from './app-confirm-dialog/app-confirm-dialog
 import {AppEditDialogComponent} from './app-edit-dialog/app-edit-dialog.component';
 import {MatSidenav} from '@angular/material';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +33,8 @@ export class AppComponent implements OnInit {
   constructor(
     public confirmDialog: MatDialog,
     public editDialog: MatDialog,
-    public todoListService: TodoListService) {
+    public todoListService: TodoListService,
+    public snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -49,23 +51,6 @@ export class AppComponent implements OnInit {
   dateToday() {
     const date = new Date;
     return date.getDate() + '-' + Number(date.getMonth() + 1) + '-' + date.getFullYear();
-  }
-
-  onAddTodo() {
-    const date = new Date;
-    const item = {
-      id: 6,
-      text: this.inputForm,
-      date: date.getDate() + '/' + Number(date.getMonth() + 1) + '/' + date.getFullYear()
-    };
-    const newData = this.todoList.slice();
-    setTimeout(() => {
-      this.addFlag = !this.addFlag;
-      newData.push(item);
-      this.todoList = newData;
-      this.sideNav.close();
-    }, 2000);
-    this.addFlag = !this.addFlag;
   }
 
   openConfirmDialog(id: string) {
@@ -97,14 +82,23 @@ export class AppComponent implements OnInit {
 
   submit() {
     const controls = this.todoForm.controls;
+    this.addFlag = !this.addFlag;
 
-    if (this.todoForm.invalid) {
-      Object.keys(controls)
-        .forEach(controlName => controls[controlName].markAsTouched());
-      return;
-    }
-
-    this.todoListService.setData(this.todoForm.value);
-    console.log(this.todoForm.value);
+    setTimeout(() => {
+      if (this.todoForm.invalid) {
+        Object.keys(controls)
+          .forEach(controlName => controls[controlName].markAsTouched());
+        this.snackBar.open('Вы ввели текст со знаком !', 'Закрыть', {
+          duration: 5000,
+        });
+        this.addFlag = !this.addFlag;
+        return;
+      }
+      this.addFlag = !this.addFlag;
+      this.sideNav.close();
+      this.todoListService.setData(this.todoForm.value);
+      this.todoList = this.todoListService.getData();
+    }, 2000);
   }
+
 }

@@ -12,7 +12,8 @@ import {
   MatInputModule,
   MatIconModule,
   MatDialogModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 
@@ -45,7 +46,8 @@ import { AppEditDialogComponent } from './app-edit-dialog/app-edit-dialog.compon
     MatIconModule,
     MatDialogModule,
     MatProgressBarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   providers: [TodoListService],
   bootstrap: [AppComponent]
