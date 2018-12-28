@@ -1,6 +1,9 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {Todo} from '../common/interfaces/todo';
+import {HttpErrorResponse} from '@angular/common/http';
+import {TodoListService} from '../common/services/todo-list.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-app-edit-dialog',
@@ -11,7 +14,17 @@ export class AppEditDialogComponent {
   text = '';
   progress = 0;
 
+  editForm: FormGroup = new FormGroup({
+    id: new FormControl(this.data.id),
+    text: new FormControl('', [
+      Validators.required,
+      Validators.pattern('[^!]*')
+    ]),
+    date: new FormControl(this.todoListService.dateToday())
+  });
+
   constructor(
+    public todoListService: TodoListService,
     public dialogRef: MatDialogRef<AppEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Todo) {
     this.text = data.text;
@@ -25,10 +38,9 @@ export class AppEditDialogComponent {
     this.dialogRef.close();
   }
 
-  onYesClick() {
+  progressBar() {
     const progressUp = () => {
       if (this.progress >= 100) {
-        // ToDo function delete items
         this.dialogRef.close(this.text);
       }
       setTimeout(() => {
@@ -37,5 +49,18 @@ export class AppEditDialogComponent {
       }, 10);
     };
     progressUp();
+  }
+
+  editTodo() {
+    if (this.editForm.invalid) {
+      this.progressBar();
+      return;
+    }
+    this.todoListService.editData(this.editForm.value)
+      .subscribe(() => {
+      }, (err: HttpErrorResponse) => {
+        console.log(err.message);
+      });
+    this.progressBar();
   }
 }

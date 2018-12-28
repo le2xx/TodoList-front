@@ -3,7 +3,7 @@
   <mat-drawer-container class="app__drawer" fullscreen>
     <mat-drawer #sidenav mode="side" closed>
       <mat-toolbar color="primary">Заполните поля</mat-toolbar>
-      <form class="app__form" *ngIf="!addFlag" [formGroup]="todoForm" (submit)="submit()">
+      <form class="app__form" *ngIf="!addFlag" [formGroup]="todoForm" (submit)="setTodo()">
         <mat-form-field class="app__form-text">
           <textarea class="app__form-input" rows="4" matInput placeholder="Введите текст"
                     (keyup)="onKey($event)" name="text" formControlName="text"></textarea>
@@ -12,7 +12,6 @@
           добавить задачу
         </button>
       </form>
-
 
       <div class="app__add-loader" *ngIf="addFlag">
         <div class="app__preloader-text">подождите, идёт добавление</div>
@@ -33,16 +32,19 @@
         <table mat-table [dataSource]="todoList" class="app__table">
 
           <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> No.</th>
+            <th mat-header-cell *matHeaderCellDef> ID</th>
             <td mat-cell *matCellDef="let element"> {{element.id}} </td>
           </ng-container>
 
           <ng-container matColumnDef="text">
             <th mat-header-cell *matHeaderCellDef> Описание</th>
-            <td mat-cell *matCellDef="let element"> {{element.text}}
-              <button mat-icon-button color="primary" class="app__edit-btn" (click)="openEditDialog(element.id)">
-                <mat-icon>edit</mat-icon>
-              </button>
+            <td mat-cell *matCellDef="let element">
+              <div class="app__table-text">{{element.text}}</div>
+              <div class="app__btn-container">
+                <button mat-icon-button color="primary" class="app__edit-btn" (click)="openEditDialog(element.id)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
             </td>
           </ng-container>
 
