@@ -21,14 +21,20 @@
     </mat-drawer>
 
     <mat-drawer-content>
-      <button class="app__new-todo" mat-raised-button color="primary" (click)="sidenav.toggle()">новая задача</button>
 
-      <div *ngIf="!preloaderFlag" class="app__preloader">
+      <div class="app__preloader" *ngIf="!preloaderFlag" >
         <div class="app__preloader-text">задачи загружаются</div>
         <mat-spinner class="app__spinner" [diameter]=50></mat-spinner>
       </div>
 
-      <div *ngIf="preloaderFlag" class="app__table-todo">
+      <div class="app__add-message" *ngIf="preloaderFlag && todoList.length === 0">
+        <h3 class="app__no-todo">В списке нет задач</h3>
+        <button class="app__new-todo" mat-raised-button color="primary" (click)="sidenav.toggle()">создать первую задачу</button>
+      </div>
+
+      <div class="app__table-todo" *ngIf="preloaderFlag && todoList.length > 0">
+        <button class="app__new-todo" mat-raised-button color="primary" (click)="sidenav.toggle()">новая задача</button>
+
         <table mat-table [dataSource]="todoList" class="app__table">
 
           <ng-container matColumnDef="id">

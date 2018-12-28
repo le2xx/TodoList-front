@@ -11,7 +11,6 @@
   }
 
   &__preloader-text {
-    color: #2E2E2E;
     display: inline-block;
     font-size: 20px;
     margin-right: 10px;
@@ -68,21 +67,16 @@
   &__add-loader {
     margin: 20px 5px;
   }
-}
 
-.mat-row {
-  &:hover .app__edit-btn {
-    animation: edit .6s ease-out;
-    display: inline-block;
-  }
-}
-
-@keyframes edit {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
+  &__add-message {
+    bottom: 0;
+    height: 100px;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 200px;
   }
 }

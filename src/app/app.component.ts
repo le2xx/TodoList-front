@@ -17,7 +17,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class AppComponent implements OnInit {
   @ViewChild('sidenav') public sideNav: MatSidenav;
 
-  todoList: Todo[];
+  todoList: Todo[] = [];
   displayedColumns: string[] = ['id', 'text', 'date', 'buttons'];
   preloaderFlag = false;
   addFlag = false;

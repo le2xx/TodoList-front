@@ -7,3 +7,20 @@ html {
   margin: 0;
   padding: 0;
 }
+
+.mat-row {
+  &:hover .app__edit-btn {
+    animation: edit .6s ease-out;
+    display: inline-block;
+  }
+}
+
+@keyframes edit {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
